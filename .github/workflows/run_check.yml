@@ -51,14 +51,4 @@ jobs:
         # 如果嫌secrets填写麻烦, 下边的run可以改成 python main.py -a * -p * -lng 121.63529 -lat 29.89154 -c 宁波校区
         run: python3 main.py -a ${{ secrets.account }} -p ${{ secrets.password }} -lng ${{ secrets.longitude }} -lat ${{ secrets.latitude }} -c ${{ secrets.campus }}
 
-      - name: 'Send email'
-        uses: dawidd6/action-send-mail@master
-        with:
-          server_address: smtp.qq.com
-          server_port: 465
-          username: ${{ secrets.MAIL_ACCOUNT }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          subject: dingding check
-          body: completed successfully!
-          to: ${{ secrets.MAIL_TARGET }}
-          from: github actions
+
