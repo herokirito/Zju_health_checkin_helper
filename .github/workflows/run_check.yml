@@ -1,9 +1,14 @@
 name: AutoCheck
 
 on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  watch:
+    types: [ started ]
   schedule:
     # 每天运行的时间, 这边会有8小时的时差, 北京时间比Github所使用时区快8个小时, 所以要设慢8个小时
-    - cron: 25 8 * * *
+    - cron: 33 8 * * *
 
 jobs:
   healthcheck:
