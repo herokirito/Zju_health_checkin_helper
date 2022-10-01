@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     # 每天运行的时间, 这边会有8小时的时差, 北京时间比Github所使用时区快8个小时, 所以要设慢8个小时
-    - cron:  '1 16,18,20,22,0 * * *'
+    - cron:  '1 16,0 * * *'
 
 jobs:
+#the first job called healthcheck
   healthcheck:
     runs-on: ubuntu-latest
 
@@ -35,6 +36,7 @@ jobs:
         # 如果嫌secrets填写麻烦, 下边的run可以改成 python main.py -a * -p * -lng 121.63529 -lat 29.89154 -c 宁波校区
         run: python3 main.py -a ${{ secrets.account }} -p ${{ secrets.password }} -lng ${{ secrets.longitude }} -lat ${{ secrets.latitude }} -c ${{ secrets.campus }}
 
+#the second job called sendemail
   sendemail:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -56,4 +58,5 @@ jobs:
           body: completed successfully!
           to: ${{ secrets.MAIL_TARGET }}
           from: github actions
+    # only if job healthcheck complete successfully will send email.
     needs: healthcheck
