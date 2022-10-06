@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # 每天运行的时间, 这边会有8小时的时差, 北京时间比Github所使用时区快8个小时, 所以要设慢8个小时
-    - cron:  '0,10,20 20 * * *'
+    - cron:  '0,10,20 0 * * *'
 
 jobs:
 #the first job called healthcheck
