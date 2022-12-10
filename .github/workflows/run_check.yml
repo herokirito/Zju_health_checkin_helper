@@ -14,7 +14,24 @@ jobs:
     steps:
       - name: Checkout target repo
         uses: actions/checkout@v2
-
+        
+        
+      - name: Sync with upstream
+        # 不是目标仓库则为fork的仓库, 且有设置 ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.repository != 'Freedomisgood/Zju_health_checkin_helper' }} 
+        continue-on-error: true
+        # 或者使用 uses: repo-sync/github-sync@v2
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.2
+        with:
+          # 上游同步仓库
+          upstream_sync_repo: Freedomisgood/Zju_health_checkin_helper
+          # 上游同步分支
+          upstream_sync_branch: main
+          # 本地要保持同步的目标分支
+          target_sync_branch: main
+          # 本地要保持同步的目标仓库token, 即当前仓库
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_pull_args: "-s recursive -Xtheirs"
 
       - name: "Set python"
         uses: actions/setup-python@v1
